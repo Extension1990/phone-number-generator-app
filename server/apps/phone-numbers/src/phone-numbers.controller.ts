@@ -4,7 +4,7 @@ import { PhoneNumbersService } from './phone-numbers.service';
 import { PhoneNumber } from '../schemas/phone-number.schema';
 import { PhoneNumberCreateDto } from '../dto/PhoneNumberCreate.dto';
 
-@Controller('phone-numbers')
+@Controller('api/phone-numbers')
 export class PhoneNumbersController {
   constructor(private readonly phoneNumbersService: PhoneNumbersService) {}
   @Get()
