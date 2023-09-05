@@ -32,13 +32,11 @@ const App = () => {
     const generatedRandomPhoneNumbers = Array(quan) // array size
     .fill()
     .map(() => Math.floor(minPossiblePhoneNumber + Math.random() * maxPossiblePhoneNumber)); // numbers from 0-50 (exclusive)
-    console.log(generatedRandomPhoneNumbers)
     return  generatedRandomPhoneNumbers;
   });
 
   const handleClick = ((event) => {
     setQuan(event.target.value)
-    console.log(quan)
     setGeneratedPhoneNumbersState(randomNumberInRange(parseInt(quan)));
   });
   
@@ -81,7 +79,8 @@ const App = () => {
   }, []);
 
   const { loading, errorMessage, countries } = countryState;
-  const generatedPhoneNumbers = generatedPhoneNumbersState;
+const generatedRandomPhoneNumbers = randomNumberInRange(parseInt(quan));
+console.log(generatedRandomPhoneNumbers)
   const [selectedCountry, setSelectedCountry] = useState();
 
   // Find selected country data, search country
@@ -93,7 +92,7 @@ const App = () => {
   });
   
   return (
-    <div className="App">
+    <div className="App bg-light-grey-900">
       <h1 className="text-3xl text-blue font-bold underline mt-5">Random Phone Number Generator</h1>
       <FormControl className="form" variant="outlined">
         <select className='p-3 mt-4 border-2 border-rose-500 rounded-md' value={selectedCountry} onChange={(e) => setSelectedCountry(e.target.value)}>
@@ -106,22 +105,22 @@ const App = () => {
             )
           })}
         </select>
-          <input type="number" name="quan" value={quan} className="border-2 border-rose-500 w-50" onChange= {handleChange} />
+        <input type="number" name="quan" value={quan} className="border-2 border-rose-500 w-50 mt-3 h-10 rounded-md p-3" onChange= {handleChange} />
+        <button aria-label="Delete" color="primary" className='mt-4 p-3 border-2 border-rose-500 text-rose-500 rounded-md' variant="outlined" onClick={handleClick}>
+          Generate Phone Numbers
+          <GetAppIcon/>
+        </button>
       </FormControl> &nbsp;&nbsp;&nbsp;&nbsp;
-      <button aria-label="Delete" color="primary" className='mt-4 p-3 border-2 border-rose-500 text-rose-500 rounded-md' variant="outlined" onClick={handleClick}>
-        Generate Phone Numbers
-        <GetAppIcon/>
-      </button>
       <div className="wrapper p-5">
           <img src={searchSelectedCountry && searchSelectedCountry.flags.png} alt="" className="h-20 mx-auto mb-3" />
           <h2 className="font-bold">Number is: {searchSelectedCountry && searchSelectedCountry.idd.root}{searchSelectedCountry && searchSelectedCountry.idd.suffixes}{num}</h2>
           <form>
             <ul>
-              {/* {generatedRandomPhoneNumbers.map((phoneNumber) => {
+              {generatedRandomPhoneNumbers.map((phoneNumber) => {
                 return (
                   <li key={uuidv4}>{searchSelectedCountry && searchSelectedCountry.idd.root}{searchSelectedCountry && searchSelectedCountry.idd.suffixes}{num}{phoneNumber}</li>
                 )
-              })} */}
+              })}
             </ul>
             <button aria-label="Delete" color="primary" className='mt-4 p-3 border-2 border-teal-500 text-teal-500 rounded-md' variant="outlined">
               Save Phone Numbers
