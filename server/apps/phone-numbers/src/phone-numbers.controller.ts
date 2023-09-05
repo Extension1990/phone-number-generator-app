@@ -7,11 +7,14 @@ import { PhoneNumberCreateDto } from '../dto/PhoneNumberCreate.dto';
 @Controller('api/phone-numbers')
 export class PhoneNumbersController {
   constructor(private readonly phoneNumbersService: PhoneNumbersService) {}
+
+  // Get phone numbers from database
   @Get()
   async getPhoneNumbers(): Promise<PhoneNumber[]> {
     return await this.phoneNumbersService.getCountryPhoneNumbers();
   }
   
+  // Store phone number in the database
   @Post()
   async storePhoneNumbers(@Body() phoneNumberCreatedto: PhoneNumberCreateDto): Promise<PhoneNumber> {
       return this.phoneNumbersService.storePhoneNumbers(phoneNumberCreatedto);

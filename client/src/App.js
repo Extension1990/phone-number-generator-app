@@ -13,32 +13,44 @@ const App = () => {
     errorMessage: ""
   });
   
-      const minPossiblePhoneNumber = 1;
-      const maxPossiblePhoneNumber = 10000;
+  const minPossiblePhoneNumber = 1;
+  const maxPossiblePhoneNumber = 10000;
   const [generatedPhoneNumbersState, setGeneratedPhoneNumbersState] = useState({
     generatedRandomPhoneNumbers: []
   });
   const [num, setNum] = useState(0);
 
-  const randomNumberInRange = () => {
-      const minPossiblePhoneNumber = 1;
-      const maxPossiblePhoneNumber = 10000;
-      const generatedRandomPhoneNumbers = Array(10) // array size is 10
-      .fill()
-      .map(() => Math.floor(minPossiblePhoneNumber + Math.random() * maxPossiblePhoneNumber)); // numbers from 0-50 (exclusive)
+  const [quan, setQuan] = useState(1);
 
-      console.log(generatedRandomPhoneNumbers);
-      // for(let i=0; i < number; i++  ) {
-      //   GeneratedRandomPhoneNumbers.push(`0${Math.floor(minPossiblePhoneNumber + Math.random() * maxPossiblePhoneNumber)}`);
-        
-      // console.log(GeneratedRandomPhoneNumbers)
-      // }
-      return  generatedRandomPhoneNumbers;
-    };
+  const handleChange = ((event) => {
+    setQuan(event.target.value)
+  });
+
+  const randomNumberInRange = ((quan) => {
+    const minPossiblePhoneNumber = 1;
+    const maxPossiblePhoneNumber = 10000;
+    const generatedRandomPhoneNumbers = Array(quan) // array size
+    .fill()
+    .map(() => Math.floor(minPossiblePhoneNumber + Math.random() * maxPossiblePhoneNumber)); // numbers from 0-50 (exclusive)
+    console.log(generatedRandomPhoneNumbers)
+    return  generatedRandomPhoneNumbers;
+  });
+
+  const handleClick = ((event) => {
+    setQuan(event.target.value)
+    console.log(quan)
+    setGeneratedPhoneNumbersState(randomNumberInRange(parseInt(quan)));
+  });
   
-    const handleClick = () => {
-        setGeneratedPhoneNumbersState(randomNumberInRange());
-    };
+  // const getInputs = () => {
+  //   if(quan > 0) {
+  //     const quant = quan;
+
+  //     setQuan(quant);
+  //   } else {
+  //     setQuan(randomNumberInRange(quan));
+  //   }
+  // }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -71,10 +83,6 @@ const App = () => {
   const { loading, errorMessage, countries } = countryState;
   const generatedPhoneNumbers = generatedPhoneNumbersState;
   const [selectedCountry, setSelectedCountry] = useState();
-  console.log("Selected Country: ", selectedCountry);
-  const generatedRandomPhoneNumbers = Array(10) // array size is 10
-      .fill()
-      .map(() => Math.floor(minPossiblePhoneNumber + Math.random() * maxPossiblePhoneNumber)); // numbers from 0-50 (exclusive)
 
   // Find selected country data, search country
   const searchSelectedCountry = countries.find((obj) => {
@@ -98,6 +106,7 @@ const App = () => {
             )
           })}
         </select>
+          <input type="number" name="quan" value={quan} className="border-2 border-rose-500 w-50" onChange= {handleChange} />
       </FormControl> &nbsp;&nbsp;&nbsp;&nbsp;
       <button aria-label="Delete" color="primary" className='mt-4 p-3 border-2 border-rose-500 text-rose-500 rounded-md' variant="outlined" onClick={handleClick}>
         Generate Phone Numbers
@@ -106,17 +115,19 @@ const App = () => {
       <div className="wrapper p-5">
           <img src={searchSelectedCountry && searchSelectedCountry.flags.png} alt="" className="h-20 mx-auto mb-3" />
           <h2 className="font-bold">Number is: {searchSelectedCountry && searchSelectedCountry.idd.root}{searchSelectedCountry && searchSelectedCountry.idd.suffixes}{num}</h2>
-          <ul>
-            {generatedRandomPhoneNumbers.map((phoneNumber) => {
-              return (
-                <li>{searchSelectedCountry && searchSelectedCountry.idd.root}{searchSelectedCountry && searchSelectedCountry.idd.suffixes}{num}{phoneNumber}</li>
-              )
-            })}
-          </ul>
-          <button aria-label="Delete" color="primary" className='mt-4 p-3 border-2 border-teal-500 text-teal-500 rounded-md' variant="outlined" onClick={handleClick}>
-            Save Phone Numbers
-            <GetAppIcon/>
-          </button>
+          <form>
+            <ul>
+              {/* {generatedRandomPhoneNumbers.map((phoneNumber) => {
+                return (
+                  <li key={uuidv4}>{searchSelectedCountry && searchSelectedCountry.idd.root}{searchSelectedCountry && searchSelectedCountry.idd.suffixes}{num}{phoneNumber}</li>
+                )
+              })} */}
+            </ul>
+            <button aria-label="Delete" color="primary" className='mt-4 p-3 border-2 border-teal-500 text-teal-500 rounded-md' variant="outlined">
+              Save Phone Numbers
+              <GetAppIcon/>
+            </button>
+          </form>
         </div>
       <div>
       </div>
