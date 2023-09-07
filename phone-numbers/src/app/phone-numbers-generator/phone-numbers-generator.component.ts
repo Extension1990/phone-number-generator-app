@@ -55,9 +55,7 @@ export class PhoneNumbersGeneratorComponent implements OnInit {
 
   storePhoneNumbers(phoneNumbers: string[]) {
     phoneNumbers = this.generatedPhoneNumbers;
-    console.log(phoneNumbers)
     this.service.storePhoneNumbers(phoneNumbers).subscribe((data: any) => {
-      console.log(data)
     });
   }
 }
