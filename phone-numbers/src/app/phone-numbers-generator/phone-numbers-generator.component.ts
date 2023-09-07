@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MainService } from '../services/main.service';
+import { PhoneNumberUtil } from 'google-libphonenumber';
 
 @Component({
   selector: 'app-phone-numbers-generator',
@@ -15,7 +16,13 @@ export class PhoneNumbersGeneratorComponent implements OnInit {
   generatedPhoneNumbers: any;
   number: string = '';
   phoneNumbers: [] = [];
+  phoneNumber: any;
   databaseNumbers: any;
+  internationalNumber = "+34654694651";
+  dialCountry: any;
+  phoneType: any;
+  phoneUtil: any;
+  isValid: boolean = false;
 
   constructor(private service: MainService) {
 
@@ -24,6 +31,18 @@ export class PhoneNumbersGeneratorComponent implements OnInit {
   ngOnInit(): void {
     this.getCountries();
     this.getPhoneNumbers();
+  }
+
+  handleNumberChange() {
+    const phoneUtil = PhoneNumberUtil.getInstance();
+    const parsedInput = phoneUtil.parseAndKeepRawInput(
+      this.phoneNumber
+    );
+    if (parsedInput.getNationalNumber() && parsedInput.getCountryCode()) {
+      this.dialCountry = parsedInput;
+    } else {
+      this.dialCountry = null;
+    }
   }
 
   getCountries() {
@@ -49,6 +68,20 @@ export class PhoneNumbersGeneratorComponent implements OnInit {
       this.phoneNumbers = data;
       this.phoneNumbers.forEach((number: any) => {
         this.databaseNumbers = number.phoneNumbers;
+        this.databaseNumbers.forEach((phoneNumber: any) => {
+          this.phoneNumber = phoneNumber;
+          const phoneUtil = PhoneNumberUtil.getInstance();
+          this.phoneUtil = phoneUtil;
+          // this.phoneType = phoneUtil.getNumberType(this.phoneNumber);
+          const parsedInput = phoneUtil.parseAndKeepRawInput(
+            this.phoneNumber
+          );
+          if (parsedInput.getNationalNumber() && parsedInput.getCountryCode()) {
+            this.dialCountry = parsedInput;
+          } else {
+            this.dialCountry = null;
+          }
+        })
       })
     });
   }

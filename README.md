@@ -24,26 +24,20 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This is a simple Nestjs, mongoDB application that can be run with React(client) and Angular (phone-numbers)
 
 ## Installation
-
+clone the repo with: git clone https://github.com/Extension1990/phone-number-generator-app.git
+checkout to the master branch with: git checkout master
 ```bash
 $ npm install
 ```
 
 ## Running the app
 
-```bash
-# development
-$ npm run start
+To run nestjs application, navigateto server by running "cd server" then run the command "npm install" to install the dependencies and then after that run "npm run start:dev".
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
+To run the Angular app, open a new terminal, then from the root directory, run "cd phone-numbers", "npm install" to install the dependencies and the "ng serve" to serve the application.
 
 ## Test
 

@@ -25,8 +25,13 @@
 
     <div class="grid justify-items-center justify-center mt-5 p-5">
         <h1 class="text-3xl text-blue font-bold mt-5 mb-5  justify-center">Phone Numbers From Database</h1>
-        <div *ngFor="let phoneNumber of phoneNumbers; let i = index">
-            <p *ngFor="let number of databaseNumbers; let i = index">{{i+1}}. {{number}}</p>
+        <div *ngFor="let number of databaseNumbers; let i = index">
+            <p class="font-bold">{{i+1}}. Phone Number: {{number}}</p>
+        <ul>
+            <li>Country code: {{dialCountry?.getCountryCode()}}</li>
+            <!-- <li *ngIf="phoneUtil">Phone Number Type: {{phoneUtil.getNumberType(number)}}</li> -->
+            <li>Phone Number Length: {{number?.length}}</li>
+        </ul>
         </div>
     </div>
 </div>
