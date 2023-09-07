@@ -4,9 +4,22 @@
     <form action="" class="flex space-x-4">
         <select name="countryCode" id="" [(ngModel)]="countryCode" (change)="onCountryChange($event)" class="p-3 justify-center mt-4 border-2 border-rose-500 rounded-md">
             <option value="">-- Select Country --</option>
-            <option value="{{country.cca2}}" *ngFor="let country of countries">{{country.name.common}}</option>
+            <option value="{{country.cca2}}" *ngFor="let country of countries">
+                <img src="{{country.flags.png}}" alt="" class="h-10">{{country.name.common}}
+            </option>
         </select>
         <input type="number" [(ngModel)]="quantity" name="quantity" (change)="onCountryChange($event)" class="border-2 border-rose-500 w-50 mt-4 h-15 rounded-md p-3"><br>
         <button class="mt-4 p-3 border-2 border-teal-500 text-teal-500 rounded-md" (click)="generatePhoneNumbers(countryCode, quantity)">Generate Phone Numbers</button>
     </form>
+
+    <div class="grid justify-items-center justify-center mt-5 p-5">
+        <h3 class="mb-5" *ngIf="generatedPhoneNumbers?.length === 0">Generated Phone Numbers: 0</h3>
+        <h3 class="mb-5" *ngIf="generatedPhoneNumbers?.length !== 0">Generated Phone Numbers: {{generatedPhoneNumbers?.length}}</h3>
+        <form action="" *ngFor="let number of generatedPhoneNumbers">
+            <div>
+                <input type="text" name="phoneNumbers" [(ngModel)]="phoneNumbers" value="{{number}}"><br>
+            </div>
+            <button class="mt-4 p-3 border-2 border-teal-500 text-teal-500 rounded-md" (click)="storePhoneNumbers(phoneNumbers)">Save Phone Numbers</button>
+        </form>
+    </div>
 </div>

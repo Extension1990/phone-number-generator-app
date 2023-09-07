@@ -1,14 +1,14 @@
 /* eslint-disable prettier/prettier */
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, SchemaTypes } from 'mongoose';
-import { PhoneNumber } from './phone-number.schema';
+import { Document } from 'mongoose';
+// import { PhoneNumber } from './phone-number.schema';
 
 export type PhoneNumbersDocument = PhoneNumbers & Document;
 
 @Schema()
 export class PhoneNumbers {
-    @Prop({ type: [SchemaTypes.ObjectId], ref: 'Phoneumber'})
-    phoneNumbers: PhoneNumber[]
+    @Prop([String])
+    phoneNumbers: string[];
 }
 
 export const PhoneNumbersSchema = SchemaFactory.createForClass(PhoneNumbers);

@@ -13,6 +13,8 @@ export class PhoneNumbersGeneratorComponent implements OnInit {
   countryCode: string = '';
   quantity: number = 0;
   generatedPhoneNumbers: any;
+  number: string = '';
+  phoneNumbers: any;
 
   constructor(private service: MainService) {
 
@@ -20,17 +22,17 @@ export class PhoneNumbersGeneratorComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCountries();
+    this.getPhoneNumbers();
   }
 
   getCountries() {
     this.service.getAllCountries().subscribe((data) => {
       this.countries = data;
-      console.log(data)
-    })
+    });
   }
 
   onCountryChange(event: any) {
-    console.log(event.target.value)
+    console.log(event.target.value);
   }
 
   onInputChange(event: any) {
@@ -40,6 +42,20 @@ export class PhoneNumbersGeneratorComponent implements OnInit {
   generatePhoneNumbers(countryCode: string, quantity: number) {
     this.service.generatePhoneNumbers(countryCode, quantity).subscribe((data: any) => {
       this.generatedPhoneNumbers = data;
-    })
+      console.log(this.generatedPhoneNumbers)
+    });
+  }
+
+  getPhoneNumbers() {
+    this.service.getPhoneNumbers().subscribe((data: any) => {
+      this.phoneNumbers = data;
+      console.log(this.phoneNumbers)
+    });
+  }
+
+  storePhoneNumbers(phoneNumbers: string[]) {
+    this.service.storePhoneNumbers(phoneNumbers).subscribe((data: any) => {
+      console.log(data)
+    });
   }
 }

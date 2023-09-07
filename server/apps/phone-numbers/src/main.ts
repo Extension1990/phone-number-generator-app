@@ -3,6 +3,7 @@ import { PhoneNumbersModule } from './phone-numbers.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(PhoneNumbersModule);
+  app.enableCors();
   await app.listen(9000);
 }
 bootstrap();
