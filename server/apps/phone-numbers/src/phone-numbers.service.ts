@@ -15,7 +15,7 @@ export class PhoneNumbersService {
   }
 
   // Get all stored phone numbers
-  async getCountryPhoneNumbers(): Promise<PhoneNumber[]> {
+  async getPhoneNumbers(): Promise<PhoneNumber[]> {
     return await this.phoneNumberRepository.getCountryPhoneNumbers();
   }
 

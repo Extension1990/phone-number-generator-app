@@ -8,7 +8,7 @@ export class MainService {
 
   countriesUrl = 'https://restcountries.com/v3.1/all';
   numbersUrl = 'https://randommer.io/api/Phone/Generate';
-  serverUrl = 'http://localhost:9000/api/phone-numbers';
+  serverUrl = 'http://localhost:9000/api/phone-numbers/';
 
   constructor(private http: HttpClient) { }
 
@@ -22,7 +22,7 @@ export class MainService {
     return this.http.get(this.numbersUrl + `?CountryCode=${countryCode}&Quantity=${quantity}`, {headers: header});
   }
 
-  storePhoneNumbers(phoneNumbers: string[]) {
+  storePhoneNumbers(phoneNumbers: any) {
     return this.http.post(this.serverUrl, phoneNumbers);
   }
 

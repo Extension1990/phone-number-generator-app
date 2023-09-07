@@ -11,7 +11,7 @@ export class PhoneNumbersController {
   // Get phone numbers from database
   @Get()
   async getPhoneNumbers(): Promise<PhoneNumber[]> {
-    return await this.phoneNumbersService.getCountryPhoneNumbers();
+    return await this.phoneNumbersService.getPhoneNumbers();
   }
   
   // Store phone number in the database

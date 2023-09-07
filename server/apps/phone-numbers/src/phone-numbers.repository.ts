@@ -18,7 +18,8 @@ export class PhoneNumberRepository {
     
     // Get all stored phone numbers
     async getCountryPhoneNumbers(): Promise<PhoneNumber[]> {
-        return await this.phoneNumberModel.find();
+        const data = this.phoneNumberModel.find();
+        return await data;
     }
 
     // Find phone numbers by country

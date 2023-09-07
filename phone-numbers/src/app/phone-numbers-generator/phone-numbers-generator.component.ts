@@ -14,7 +14,8 @@ export class PhoneNumbersGeneratorComponent implements OnInit {
   quantity: number = 0;
   generatedPhoneNumbers: any;
   number: string = '';
-  phoneNumbers: any;
+  phoneNumbers: [] = [];
+  databaseNumbers: any;
 
   constructor(private service: MainService) {
 
@@ -42,18 +43,22 @@ export class PhoneNumbersGeneratorComponent implements OnInit {
   generatePhoneNumbers(countryCode: string, quantity: number) {
     this.service.generatePhoneNumbers(countryCode, quantity).subscribe((data: any) => {
       this.generatedPhoneNumbers = data;
-      console.log(this.generatedPhoneNumbers)
     });
   }
 
   getPhoneNumbers() {
     this.service.getPhoneNumbers().subscribe((data: any) => {
       this.phoneNumbers = data;
-      console.log(this.phoneNumbers)
+      this.phoneNumbers.forEach((number: any) => {
+        this.databaseNumbers = number.phoneNumbers;
+        console.log(this.databaseNumbers)
+      })
     });
   }
 
   storePhoneNumbers(phoneNumbers: string[]) {
+    phoneNumbers = this.generatedPhoneNumbers;
+    console.log(phoneNumbers)
     this.service.storePhoneNumbers(phoneNumbers).subscribe((data: any) => {
       console.log(data)
     });
