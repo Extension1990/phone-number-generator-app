@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { MainService } from '../services/main.service';
 import { PhoneNumberUtil } from 'google-libphonenumber';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-phone-numbers-generator',
   templateUrl: './phone-numbers-generator.component.html',
-  styleUrls: ['./phone-numbers-generator.component.scss']
+  styleUrls: ['./phone-numbers-generator.component.scss'],
 })
 export class PhoneNumbersGeneratorComponent implements OnInit {
-
   countries: any;
   selectedCountry: any;
   countryCode: string = '';
@@ -18,15 +18,13 @@ export class PhoneNumbersGeneratorComponent implements OnInit {
   phoneNumbers: [] = [];
   phoneNumber: any;
   databaseNumbers: any;
-  internationalNumber = "+34654694651";
+  internationalNumber = '+34654694651';
   dialCountry: any;
   phoneType: any;
   phoneUtil: any;
   isValid: boolean = false;
 
-  constructor(private service: MainService) {
-
-  }
+  constructor(private service: MainService) {}
 
   ngOnInit(): void {
     this.getCountries();
@@ -35,9 +33,7 @@ export class PhoneNumbersGeneratorComponent implements OnInit {
 
   handleNumberChange() {
     const phoneUtil = PhoneNumberUtil.getInstance();
-    const parsedInput = phoneUtil.parseAndKeepRawInput(
-      this.phoneNumber
-    );
+    const parsedInput = phoneUtil.parseAndKeepRawInput(this.phoneNumber);
     if (parsedInput.getNationalNumber() && parsedInput.getCountryCode()) {
       this.dialCountry = parsedInput;
     } else {
@@ -52,15 +48,19 @@ export class PhoneNumbersGeneratorComponent implements OnInit {
   }
 
   onCountryChange(event: any) {
+    console.log(event);
   }
 
   onInputChange(event: any) {
+    console.log(event);
   }
 
   generatePhoneNumbers(countryCode: string, quantity: number) {
-    this.service.generatePhoneNumbers(countryCode, quantity).subscribe((data: any) => {
-      this.generatedPhoneNumbers = data;
-    });
+    this.service
+      .generatePhoneNumbers(countryCode, quantity)
+      .subscribe((data: any) => {
+        this.generatedPhoneNumbers = data;
+      });
   }
 
   getPhoneNumbers() {
@@ -73,22 +73,26 @@ export class PhoneNumbersGeneratorComponent implements OnInit {
           const phoneUtil = PhoneNumberUtil.getInstance();
           this.phoneUtil = phoneUtil;
           // this.phoneType = phoneUtil.getNumberType(this.phoneNumber);
-          const parsedInput = phoneUtil.parseAndKeepRawInput(
-            this.phoneNumber
-          );
+          const parsedInput = phoneUtil.parseAndKeepRawInput(this.phoneNumber);
           if (parsedInput.getNationalNumber() && parsedInput.getCountryCode()) {
             this.dialCountry = parsedInput;
           } else {
             this.dialCountry = null;
           }
-        })
-      })
+        });
+      });
     });
   }
 
   storePhoneNumbers(phoneNumbers: string[]) {
     phoneNumbers = this.generatedPhoneNumbers;
     this.service.storePhoneNumbers(phoneNumbers).subscribe((data: any) => {
+      this.ngOnInit();
+      Swal.fire({
+        icon: 'success',
+        title: 'Phone numbers stored successfully to database',
+      });
+      console.log(data);
     });
   }
 }

@@ -29,7 +29,8 @@
     "libphonenumber-js": "^1.10.43",
     "mongoose": "^7.5.0",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "sweetalert2": "^11.7.27"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",

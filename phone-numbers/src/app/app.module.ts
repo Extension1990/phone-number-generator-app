@@ -8,18 +8,15 @@ import { PhoneNumbersGeneratorComponent } from './phone-numbers-generator/phone-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    PhoneNumbersGeneratorComponent
-  ],
+  declarations: [AppComponent, PhoneNumbersGeneratorComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
