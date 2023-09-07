@@ -23,7 +23,7 @@ export class MainService {
   }
 
   storePhoneNumbers(phoneNumbers: any) {
-    return this.http.post(this.serverUrl, phoneNumbers);
+    return this.http.post(this.serverUrl, {phoneNumbers});
   }
 
   getPhoneNumbers() {

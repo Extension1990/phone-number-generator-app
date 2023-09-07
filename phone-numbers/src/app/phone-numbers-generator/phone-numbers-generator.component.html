@@ -17,7 +17,7 @@
         <h3 class="mb-5" *ngIf="generatedPhoneNumbers?.length !== 0">Generated Phone Numbers: {{generatedPhoneNumbers?.length}}</h3>
         <form action="">
             <div *ngFor="let number of generatedPhoneNumbers; let i = index">
-                <input type="text" name="phoneNumbers" [ngModel]="generatedPhoneNumbers[i]" value="number"><br>
+                <input type="text" name="phoneNumbers" [ngModel]="phoneNumbers[i]" value="number"><br>
             </div>
             <button class="mt-4 p-3 border-2 border-teal-500 text-teal-500 rounded-md" (click)="storePhoneNumbers(generatedPhoneNumbers)">Save Phone Numbers</button>
         </form>
@@ -26,7 +26,7 @@
     <div class="grid justify-items-center justify-center mt-5 p-5">
         <h1 class="text-3xl text-blue font-bold mt-5 mb-5  justify-center">Phone Numbers From Database</h1>
         <div *ngFor="let phoneNumber of phoneNumbers; let i = index">
-            <p *ngFor="let number of databaseNumbers; let i = index">{{number}}</p>
+            <p *ngFor="let number of databaseNumbers; let i = index">{{i+1}}. {{number}}</p>
         </div>
     </div>
 </div>
