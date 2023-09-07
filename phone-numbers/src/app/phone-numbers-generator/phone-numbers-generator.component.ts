@@ -33,11 +33,9 @@ export class PhoneNumbersGeneratorComponent implements OnInit {
   }
 
   onCountryChange(event: any) {
-    console.log(event.target.value);
   }
 
   onInputChange(event: any) {
-    console.log(event.target.value)
   }
 
   generatePhoneNumbers(countryCode: string, quantity: number) {
@@ -51,7 +49,6 @@ export class PhoneNumbersGeneratorComponent implements OnInit {
       this.phoneNumbers = data;
       this.phoneNumbers.forEach((number: any) => {
         this.databaseNumbers = number.phoneNumbers;
-        console.log(this.databaseNumbers)
       })
     });
   }
