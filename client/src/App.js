@@ -1,6 +1,5 @@
 import './App.css';
 import { useState, useEffect } from 'react';
-import { Button } from '@material-ui/core';
 import FormControl from '@material-ui/core/FormControl';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import axios from "axios";
@@ -13,6 +12,18 @@ const App = () => {
     errorMessage: ""
   });
   
+  const res = (CountryCode, Quantity) => {
+    console.log(CountryCode, Quantity)
+    axios.get(`https://randommer.io/api/Phone/Generate?CountryCode=${CountryCode}&Quantity=${Quantity}`, {
+        headers: {
+          'x-api-key': `2dcf5cc7939946bfb948c51aaa2d377b`,
+          'Content-Type' : 'application/json',
+          'Accept' : 'application/json',
+        }
+    }).then((res) => {
+      console.log(res.data)
+    })}
+  
   const minPossiblePhoneNumber = 1;
   const maxPossiblePhoneNumber = 10000;
   const [generatedPhoneNumbersState, setGeneratedPhoneNumbersState] = useState({
@@ -20,10 +31,11 @@ const App = () => {
   });
   const [num, setNum] = useState(0);
 
-  const [quan, setQuan] = useState(1);
+  const [Quantity, setQuantity] = useState(0);
 
   const handleChange = ((event) => {
-    setQuan(event.target.value)
+    setQuantity(event.target.value);
+    console.log(Quantity)
   });
 
   const randomNumberInRange = ((quan) => {
@@ -35,20 +47,10 @@ const App = () => {
     return  generatedRandomPhoneNumbers;
   });
 
-  const handleClick = ((event) => {
-    setQuan(event.target.value)
-    setGeneratedPhoneNumbersState(randomNumberInRange(parseInt(quan)));
+  const handleSubmit = ((event) => {
+    setQuantity(event.target.value)
+    setGeneratedPhoneNumbersState(randomNumberInRange(parseInt(Quantity)));
   });
-  
-  // const getInputs = () => {
-  //   if(quan > 0) {
-  //     const quant = quan;
-
-  //     setQuan(quant);
-  //   } else {
-  //     setQuan(randomNumberInRange(quan));
-  //   }
-  // }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -78,18 +80,19 @@ const App = () => {
     fetchData();
   }, []);
 
-  const { loading, errorMessage, countries } = countryState;
-const generatedRandomPhoneNumbers = randomNumberInRange(parseInt(quan));
-console.log(generatedRandomPhoneNumbers)
+  const { countries } = countryState;
+  const generatedRandomPhoneNumbers = randomNumberInRange(parseInt(Quantity));
+  console.log(generatedRandomPhoneNumbers)
   const [selectedCountry, setSelectedCountry] = useState();
 
   // Find selected country data, search country
   const searchSelectedCountry = countries.find((obj) => {
-    if(obj.name.common === selectedCountry) {
+    if(obj.cca2 === selectedCountry) {
       return true;
     }
     return false;
   });
+  console.log(selectedCountry)
   
   return (
     <div className="App bg-light-grey-900">
@@ -99,14 +102,14 @@ console.log(generatedRandomPhoneNumbers)
           <option value="">--Select Country--</option>
           {countries.map((item) => {
             return (
-              <option key={uuidv4()} value={item.name.common}>
+              <option key={uuidv4()} name="CountryCode" value={item.cca2}>
                 {item.name.common}
               </option>
             )
           })}
         </select>
-        <input type="number" name="quan" value={quan} className="border-2 border-rose-500 w-50 mt-3 h-10 rounded-md p-3" onChange= {handleChange} />
-        <button aria-label="Delete" color="primary" className='mt-4 p-3 border-2 border-rose-500 text-rose-500 rounded-md' variant="outlined" onClick={handleClick}>
+        <input type="number" name="Quantity" value={Quantity} className="border-2 border-rose-500 w-50 mt-3 h-10 rounded-md p-3" onChange= {handleChange} />
+        <button aria-label="Delete" color="primary" className='mt-4 p-3 border-2 border-teal-500 text-teal-500 rounded-md' variant="outlined" onClick={res}>
           Generate Phone Numbers
           <GetAppIcon/>
         </button>
@@ -122,6 +125,11 @@ console.log(generatedRandomPhoneNumbers)
                 )
               })}
             </ul>
+            {generatedRandomPhoneNumbers.map((phoneNumber) => {
+                return (
+                  <input key={uuidv4} type='text' value={generatedRandomPhoneNumbers} hidden/>
+                )
+              })}
             <button aria-label="Delete" color="primary" className='mt-4 p-3 border-2 border-teal-500 text-teal-500 rounded-md' variant="outlined">
               Save Phone Numbers
               <GetAppIcon/>
